@@ -182,7 +182,7 @@ public class Fragment1 extends Fragment {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .get()
-                    .url("http://192.168.0.14:8080/ibook/GetBookByNameServlet?bookname=o")
+                    .url("http://192.168.0.14:8080/ibook/GetBookByNameServlet?bookname=java")
 //                    .url("https://raw.github.com/square/okhttp/master/README.md")
 
                     .build();
