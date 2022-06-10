@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="person">
+        <item>赵壹</item>
+        <item>钱贰</item>
+        <item>孙叁</item>
+        <item>李肆</item>
+        <item>周伍</item>
+        <item>吴陆</item>
+        <item>郑柒</item>
+        <item>王捌</item>
+    </string-array>
+    <string-array name="city">
+        <item>大连</item>
+        <item>青岛</item>
+        <item>宁波</item>
+        <item>厦门</item>
+        <item>深圳</item>
+    </string-array>
+</resources>
