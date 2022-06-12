@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <ImageView
+        android:id="@+id/bookinfo_book_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/book_logo_test" />
+
+    <TextView
+        android:id="@+id/bookinfo_bg"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/bookinfo_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookinfo_book_image" />
+
+    <TextView
+        android:id="@+id/bookinfo_book_price"
+        android:layout_width="71dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="19.9"
+        android:textColor="@color/price_red"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bookinfo_bg"
+        app:layout_constraintTop_toTopOf="@+id/bookinfo_bg" />
+
+    <TextView
+        android:id="@+id/bookinfo_book_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:text="销量 100+"
+        app:layout_constraintBottom_toBottomOf="@+id/bookinfo_book_price"
+        app:layout_constraintEnd_toEndOf="@+id/bookinfo_bg"
+        app:layout_constraintTop_toTopOf="@+id/bookinfo_book_price" />
+
+
+    <TextView
+        android:id="@+id/bookinfo_book_description"
+        android:layout_width="346dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bookinfo_book_price"
+        app:layout_constraintTop_toBottomOf="@+id/bookinfo_book_price" />
+
+    <TextView
+        android:id="@+id/bookinfo_book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="书名："
+        app:layout_constraintStart_toStartOf="@+id/bookinfo_book_description"
+        app:layout_constraintTop_toBottomOf="@+id/bookinfo_book_description" />
+
+    <TextView
+        android:id="@+id/bookinfo_book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="作者："
+        app:layout_constraintStart_toStartOf="@+id/bookinfo_book_name"
+        app:layout_constraintTop_toBottomOf="@+id/bookinfo_book_name" />
+
+    <TextView
+        android:id="@+id/bookinfo_book_category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="类别："
+        app:layout_constraintBottom_toBottomOf="@+id/bookinfo_book_author"
+        app:layout_constraintStart_toEndOf="@+id/bookinfo_book_author" />
+
+    <TextView
+        android:id="@+id/bookinfo_buttom"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/add_to_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:text="加入购物车"
+        app:layout_constraintBottom_toBottomOf="@+id/pay_now"
+        app:layout_constraintEnd_toStartOf="@+id/pay_now" />
+
+    <Button
+        android:id="@+id/pay_now"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="立即购买"
+        app:layout_constraintBottom_toBottomOf="@+id/bookinfo_buttom"
+        app:layout_constraintEnd_toEndOf="@+id/bookinfo_buttom" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -231,8 +231,6 @@ public class Fragment1 extends Fragment {
             Request request = new Request.Builder()
                     .get()
                     .url("http://192.168.0.14:8080/ibook/GetAllBookServlet")
-//                    .url("https://raw.github.com/square/okhttp/master/README.md")
-
                     .build();
             Call call = client.newCall(request);
             Response response = call.execute();
@@ -276,8 +274,6 @@ public class Fragment1 extends Fragment {
                     showDatas(newdata1);
                     break;
             }
-//            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-//            tv_1.setText(s);
         }
     }
 

@@ -334,18 +334,13 @@ public class Fragment2 extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Button num_dash = (Button) view;
-//					int num=(int)data.get(position).get("cartitem_num");
-//					holder.cartitem_num.setText(num-1+"");
-                    Toast.makeText(getActivity(),
-                            "减少",
-                            Toast.LENGTH_SHORT).show();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             OkHttpClient client = new OkHttpClient();
                             Request request = new Request.Builder()
                                     .get()
-                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet")
+                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet?bookId="+data.get(position).get("cartitem_book_description")+"&num=-1&userid=1f125f95-e52f-4ff8-bf3d-432f5844ed14")
                                     .build();
                             Call call = client.newCall(request);
                             try {
@@ -354,8 +349,11 @@ public class Fragment2 extends Fragment {
                                 e.printStackTrace();
                             }
 //                            response.body().string();
+                            Thread t = new Fragment2.WorkerThread();
+                            t.start();
                         }
                     }).start();
+
                 }
             });
 
@@ -363,9 +361,27 @@ public class Fragment2 extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Button num_plus = (Button) view;
-                    Toast.makeText(getActivity(),
-                            "增加",
-                            Toast.LENGTH_SHORT).show();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            OkHttpClient client = new OkHttpClient();
+                            Request request = new Request.Builder()
+                                    .get()
+                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet?bookId="+data.get(position).get("cartitem_book_description")+"&num=1&userid=1f125f95-e52f-4ff8-bf3d-432f5844ed14")
+                                    .build();
+                            Call call = client.newCall(request);
+                            try {
+                                Response response = call.execute();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+//                            response.body().string();
+                            Thread t = new Fragment2.WorkerThread();
+                            t.start();
+                        }
+                    }).start();
+
+
                 }
             });
 
