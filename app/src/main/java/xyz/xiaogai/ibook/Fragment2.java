@@ -201,6 +201,7 @@ public class Fragment2 extends Fragment {
                         item.put("cartitem_book_description", cartItem.getBook().getDescription());
                         item.put("cartitem_book_price", cartItem.getBook().getPrice());
                         item.put("cartitem_num", cartItem.getNum());
+                        item.put("cartitem_book_id", cartItem.getBook().getId());
                         newdata.add(item);
                     }
                     datas=newdata;
@@ -340,7 +341,7 @@ public class Fragment2 extends Fragment {
                             OkHttpClient client = new OkHttpClient();
                             Request request = new Request.Builder()
                                     .get()
-                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet?bookId="+data.get(position).get("cartitem_book_description")+"&num=-1&userid=1f125f95-e52f-4ff8-bf3d-432f5844ed14")
+                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet?bookId="+data.get(position).get("cartitem_book_id")+"&num=-1&userid=1f125f95-e52f-4ff8-bf3d-432f5844ed14")
                                     .build();
                             Call call = client.newCall(request);
                             try {
@@ -367,7 +368,7 @@ public class Fragment2 extends Fragment {
                             OkHttpClient client = new OkHttpClient();
                             Request request = new Request.Builder()
                                     .get()
-                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet?bookId="+data.get(position).get("cartitem_book_description")+"&num=1&userid=1f125f95-e52f-4ff8-bf3d-432f5844ed14")
+                                    .url("http://192.168.0.14:8080/ibook/UpdateCartItemNumServlet?bookId="+data.get(position).get("cartitem_book_id")+"&num=1&userid=1f125f95-e52f-4ff8-bf3d-432f5844ed14")
                                     .build();
                             Call call = client.newCall(request);
                             try {

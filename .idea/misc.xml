@@ -13,14 +13,19 @@
         <entry key="..\:/demo/android/iBook/app/src/main/res/drawable/selector_tab3_home.xml" value="0.202" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/book_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/book_info_activity.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/book_list.xml" value="0.18478260869565216" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/cartitem_list.xml" value="0.24947916666666667" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/content_book_info.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_1.xml" value="0.264" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_2.xml" value="0.264" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_3.xml" value="0.19427083333333334" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_first.xml" value="0.1578125" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_second.xml" value="0.1578125" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/item_listview.xml" value="0.12952898550724637" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/item_tab.xml" value="0.19427083333333334" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/message_list.xml" value="0.24947916666666667" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/ocr_book_activity.xml" value="0.17083333333333334" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/test.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/menu/menu_option.xml" value="0.24947916666666667" />
       </map>
