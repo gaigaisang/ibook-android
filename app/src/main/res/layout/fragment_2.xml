@@ -1,13 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    android:padding="5dp" >
+    android:background="@color/bg">
 
-    <ListView
-        android:id="@+id/lv_show2"
+    <TextView
+        android:id="@+id/cart_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/person"/>
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="购物车"
+        android:textColor="@color/black"
+        android:textSize="20sp"
 
-</LinearLayout>
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/cartitem_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:background="@color/bg"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.scwang.smart.refresh.header.ClassicsHeader>
+
+
+        <ListView
+            android:id="@+id/cartitem_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bookitem_radius"
+            android:divider="@null"
+            android:dividerHeight="15dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cart_title" />
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <CheckBox
+        android:id="@+id/cartitem_check_all"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="全选"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cartitem_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="0.00"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/price_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cartitem_over"
+        app:layout_constraintTop_toTopOf="@+id/cartitem_over"
+        app:layout_constraintVertical_bias="0.448" />
+
+    <Button
+        android:id="@+id/cartitem_over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结 算"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bookitem_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="合计: "
+        app:layout_constraintBottom_toBottomOf="@+id/cartitem_price"
+        app:layout_constraintEnd_toStartOf="@+id/cartitem_price"
+        app:layout_constraintTop_toTopOf="@+id/cartitem_price" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

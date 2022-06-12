@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/check_cartitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"  />
+
+    <ImageView
+        android:id="@+id/cartitem_book_image"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/check_cartitem"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/book_logo_test" />
+
+    <TextView
+        android:id="@+id/cartitem_book_name"
+        android:layout_width="140dp"
+        android:layout_height="46dp"
+
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/cartitem_book_image"
+        app:layout_constraintTop_toTopOf="@+id/cartitem_book_image" />
+
+    <TextView
+        android:id="@+id/cartitem_book_description"
+        android:layout_width="180dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="TextView"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cartitem_book_name"
+        app:layout_constraintTop_toBottomOf="@+id/cartitem_book_name" />
+
+    <TextView
+        android:id="@+id/cartitem_book_price"
+        android:layout_width="78dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="99.00"
+        android:textColor="@color/price_red"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/cartitem_book_image"
+        app:layout_constraintStart_toEndOf="@+id/cartitem_book_image" />
+
+    <TextView
+        android:id="@+id/cartitem_num"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="1"
+        app:layout_constraintBottom_toBottomOf="@+id/cartitem_book_price"
+        app:layout_constraintStart_toEndOf="@+id/num_dash" />
+
+    <Button
+        android:id="@+id/num_dash"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_remove"
+        app:layout_constraintBottom_toBottomOf="@+id/cartitem_book_price"
+        app:layout_constraintStart_toEndOf="@+id/cartitem_book_price"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/num_plus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@+id/cartitem_num"
+        app:layout_constraintStart_toEndOf="@+id/cartitem_num"
+        tools:ignore="MissingConstraints" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

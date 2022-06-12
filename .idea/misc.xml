@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/demo/android/iBook/app/src/main/res/drawable-v24/search_radius.xml" value="0.2015" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/drawable/bookitem_radius.xml" value="0.168" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/drawable/message_radius.xml" value="0.185" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/drawable/selector_tab1_add.xml" value="0.1085" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/drawable/selector_tab1_book.xml" value="0.202" />
@@ -10,12 +12,14 @@
         <entry key="..\:/demo/android/iBook/app/src/main/res/drawable/selector_tab3_home.xml" value="0.202" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/book_list.xml" value="0.18478260869565216" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/cartitem_list.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_1.xml" value="0.2" />
-        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_2.xml" value="0.109375" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_2.xml" value="0.264" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/fragment_3.xml" value="0.19427083333333334" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/item_listview.xml" value="0.12952898550724637" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/item_tab.xml" value="0.19427083333333334" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/layout/message_list.xml" value="0.24947916666666667" />
+        <entry key="..\:/demo/android/iBook/app/src/main/res/layout/test.xml" value="0.24947916666666667" />
         <entry key="..\:/demo/android/iBook/app/src/main/res/menu/menu_option.xml" value="0.24947916666666667" />
       </map>
     </option>
