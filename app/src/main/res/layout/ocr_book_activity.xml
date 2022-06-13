@@ -16,13 +16,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iv_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ocr_top_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="@+id/ocr_top_bg"
         app:layout_constraintStart_toStartOf="@+id/ocr_top_bg"
-        app:layout_constraintTop_toTopOf="@+id/ocr_top_bg"
-        app:srcCompat="@drawable/book_logo_test" />
+        app:layout_constraintTop_toTopOf="@+id/ocr_top_bg" />
 
     <ListView
         android:id="@+id/ocr_search_list"

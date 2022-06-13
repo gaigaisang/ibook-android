@@ -23,14 +23,14 @@ public class Fragment3 extends Fragment {
 	}
 
 	private void init(View view) {
-		ListView listView = view.findViewById(R.id.lv_show3);
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getActivity(),
-						parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
-			}
-		});
+//		ListView listView = view.findViewById(R.id.lv_show3);
+//		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//				Toast.makeText(getActivity(),
+//						parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+//			}
+//		});
 
 	}
 }

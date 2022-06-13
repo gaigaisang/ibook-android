@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +16,13 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,11 +31,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+
 import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.tencentcloudapi.common.Credential;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
+import com.tencentcloudapi.common.profile.ClientProfile;
+import com.tencentcloudapi.common.profile.HttpProfile;
+import com.tencentcloudapi.ocr.v20181119.OcrClient;
+import com.tencentcloudapi.ocr.v20181119.models.GeneralBasicOCRRequest;
+import com.tencentcloudapi.ocr.v20181119.models.GeneralBasicOCRResponse;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,21 +54,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
-import xyz.xiaogai.ibook.Fragment1;
+
 import xyz.xiaogai.ibook.R;
+
 import xyz.xiaogai.ibook.bean.Book;
-import xyz.xiaogai.ibook.util.GeneralBasicOCR;
 import xyz.xiaogai.ibook.util.ImageUtil;
 
 public class OcrBookActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
@@ -64,9 +83,10 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
     private static final int MISSION_SUCCESS = 0;
     private static final int MISSION_FAILED = -1;
     private ListView listView;
-    private String bash64image;
-    private Handler handler;
-    GeneralBasicOCR generalBasicOCR;
+    private TextView book_id;
+    private ImageView ocr_top_image;
+    private Handler Ocrhandler;
+    private String keyword;
     private final String[] permissions = {
             Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -83,11 +103,13 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
     }
 
     public void initOcrBook() {
-        handler = new MyHandler();
+        Ocrhandler = new OcrHandler();
         listView = findViewById(R.id.ocr_search_list);
-
+        ocr_top_image = findViewById(R.id.ocr_top_image);
         getPermissions();
         showImagePickDialog();
+
+
     }
 
     public void showImagePickDialog() {
@@ -148,12 +170,14 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
                         InputStream inputStream = getContentResolver().openInputStream(imageUri);
                         String s = ImageUtil.inputStream2Base64(inputStream);
                         Log.i("TAG", "onActivityResult: " + s);
-                        bash64image = s;
-                        Thread t = new WorkerThread();
-                        t.start();
+//                        bash64image = s;
+                        getResultAsyncTask resultAsyncTask = new getResultAsyncTask();
+                        Log.i("TAG", "onActivityResult: data:image/jpeg;base64," + s);
+                        resultAsyncTask.execute("data:image/jpeg;base64,"+s);
+//                        resultAsyncTask.execute("data:image/jpeg;base64,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");
+//                        Thread t = new WorkerThread();
+//                        t.start();
 
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -266,8 +290,101 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
         }
     }
 
+    private class getResultAsyncTask extends AsyncTask<String, Integer, String> {
+        //执行前的操作
+        @Override
+        protected void onPreExecute() {
+            Toast.makeText(getApplicationContext(), "正在查询请稍等。。", Toast.LENGTH_SHORT).show();
+        }
+
+        //执行异步任务
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            String s = params[0];
+            s= getOcrResult(s);
+            if (s==null){
+                return null;
+            }
+//            Log.i("result-s", s);
+            try {
+
+                JSONObject  jsonObject = new JSONObject(s);
+                JSONArray jsonArray = jsonObject.getJSONArray("TextDetections");
+//                String[] result = new String[jsonArray.length()];
+                String result = "";
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                    String str = jsonObject1.getString("DetectedText");
+//                    result[i] = str;
+                    result+= str;
+                }
+
+//                Gson gson = new Gson();
+//                String json = gson.toJson(result);
+                keyword = result;
+//                Log.i("result-json", json);
+                return result;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
+        //结果 返回主线程
+        @Override
+        protected void onPostExecute(String result) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            ocr_top_image.setImageBitmap(bitmap);
+
+            if (result != null) {
+                Log.i("result", result);
+                Thread t = new OcrThread();
+                t.start();
+            } else {
+                Toast.makeText(getApplicationContext(), "未找到相似图书 换个角度再试试", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+        public String getOcrResult(String base64Image) {
+            try {
+                // 实例化一个认证对象，入参需要传入腾讯云账户secretId，secretKey,此处还需注意密钥对的保密
+                // 密钥可前往https://console.cloud.tencent.com/cam/capi网站进行获取
+                Credential cred = new Credential("AKIDjHacNr40g5C2buwhBOKzNVMwFH2WjfLk", "91cwzlHWUBbleGbgUNzLRGo55oGQJvGK");
+                // 实例化一个http选项，可选的，没有特殊需求可以跳过
+                HttpProfile httpProfile = new HttpProfile();
+                httpProfile.setEndpoint("ocr.tencentcloudapi.com");
+                // 实例化一个client选项，可选的，没有特殊需求可以跳过
+                ClientProfile clientProfile = new ClientProfile();
+                clientProfile.setHttpProfile(httpProfile);
+                // 实例化要请求产品的client对象,clientProfile是可选的
+                OcrClient client = new OcrClient(cred, "ap-beijing", clientProfile);
+                // 实例化一个请求对象,每个接口都会对应一个request对象
+                GeneralBasicOCRRequest req = new GeneralBasicOCRRequest();
+                req.setImageBase64(base64Image);
+                // 返回的resp是一个GeneralBasicOCRResponse的实例，与请求对象对应
+                GeneralBasicOCRResponse resp = client.GeneralBasicOCR(req);
+                // 输出json格式的字符串回包
+                return (GeneralBasicOCRResponse.toJsonString(resp));
+            } catch (TencentCloudSDKException e) {
+                return null;
+            }
+
+        }
+
+    }
+
     @SuppressLint("HandlerLeak")
-    private class MyHandler extends Handler {
+    private class OcrHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             List<Book> books = (List<Book>) msg.obj;
@@ -331,13 +448,13 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    book_id = view.findViewById(R.id.book_id);
-////                    Toast.makeText(getContext(),book_id.getText().toString(),Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("bookId", book_id.getText().toString());
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
+                    book_id = findViewById(R.id.book_id);
+//                    Toast.makeText(getContext(),book_id.getText().toString(),Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), BookInfoActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("bookId", book_id.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             });
 
@@ -349,40 +466,23 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
         }
     }
 
-    private class WorkerThread extends Thread {
-        String dataa;
+    private class OcrThread extends Thread {
         @Override
         public void run() {
 
             String data = null;
-//            Thread t= new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        dataa = doWork(getResult());
-//                    } catch (IOException | JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//            t.start();
-//            try {
-//                t.join();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
             try {
-                data= doWork(getResult());
-            } catch (IOException | JSONException e) {
+                data = doWork();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+
             if (data.equals("false")) {
-                    data = null;
-                }
+                data = null;
+            }
 
 
-            Message msg = handler.obtainMessage();
+            Message msg = Ocrhandler.obtainMessage();
             if (!TextUtils.isEmpty(data)) {
                 ObjectMapper mapper = new ObjectMapper();
 
@@ -398,36 +498,17 @@ public class OcrBookActivity extends AppCompatActivity implements EasyPermission
                 msg.what = MISSION_FAILED;
             }
 
-            handler.sendMessage(msg);
+            Ocrhandler.sendMessage(msg);
         }
 
-        private String getResult() throws JSONException {
-            String s = generalBasicOCR.getOcrResult(bash64image);
-            if (s == null) {
-                return null;
-            }
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = jsonObject.getJSONArray("TextDetections");
-            String result = "";
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                String words = jsonObject1.getString("DetectedText");
-                result += words;
-            }
-            Log.i("result:", result);
-            return result;
-        }
 
     }
 
-    private String doWork(String rs) throws IOException {
-        if (rs == null) {
-            return null;
-        }
+    private String doWork() throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .get()
-                .url("http://192.168.0.14:8080/ibook/ParseBookServlet?text=" + rs)
+                .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "{userid:123}"))
+                .url("http://192.168.0.14:8080/ibook/ParseBookServlet?keyword=" + keyword)
                 .build();
         Call call = client.newCall(request);
         Response response = call.execute();
